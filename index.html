@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Our Little World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Caveat:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Floating Background Bubbles & Hearts -->
+<div class="animated-bg">
+  <div class="bubble b1"></div>
+  <div class="bubble b2"></div>
+  <div class="bubble b3"></div>
+  <div class="bubble b4"></div>
+  
+  <div class="heart h1">
+    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  </div>
+  <div class="heart h2">
+    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  </div>
+  <div class="heart h3">
+    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  </div>
+  <div class="heart h4">
+    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  </div>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="grainFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="noise" />
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0" />
+    </filter>
+  </defs>
+</svg>
+
+<!-- Background music -->
+<audio id="bgmAudio" preload="auto"></audio>
+<button class="bgm-toggle" id="bgmToggle" aria-label="Mute background music" aria-pressed="false">
+  <span class="bgm-bars"><span></span><span></span><span></span></span>
+</button>
+
+<div id="app">
+
+  <div class="ambient-bg" id="ambientBg" aria-hidden="true"></div>
+  <div class="kraft-ambient" id="kraftAmbient" aria-hidden="true"></div>
+
+  <!-- ================= PAGE 1 — THE LOCK ================= -->
+  <section class="page active" id="page-1" data-skin="bloom">
+    <div class="page-inner unlock-panel">
+      <div class="lock-wrap stagger-in">
+        <svg class="lock-icon" viewBox="0 0 100 120" aria-hidden="true">
+          <defs>
+            <linearGradient id="lockGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f6c6d6" />
+              <stop offset="100%" stop-color="#d88a9a" />
+            </linearGradient>
+          </defs>
+          <path class="lock-shackle" d="M30 52 V34 a20 20 0 0 1 40 0 V52" fill="none" stroke="url(#lockGrad)" stroke-width="9" stroke-linecap="round" />
+          <rect class="lock-body" x="14" y="50" width="72" height="58" rx="14" fill="url(#lockGrad)" />
+          <circle class="lock-keyhole" cx="50" cy="74" r="6.5" fill="#fff8f5" />
+          <rect class="lock-keyhole-slot" x="47" y="78" width="6" height="15" rx="2" fill="#fff8f5" />
+        </svg>
+      </div>
+
+      <h1 class="page-heading script stagger-in">A Little World, Just for You</h1>
+      <p class="page-sub stagger-in">Enter our date to step inside.</p>
+
+      <div class="digit-row stagger-in">
+        <input class="digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Month, first digit" />
+        <input class="digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Month, second digit" />
+        <span class="digit-sep">/</span>
+        <input class="digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Day, first digit" />
+        <input class="digit-input" type="text" inputmode="numeric" maxlength="1" aria-label="Day, second digit" />
+      </div>
+
+      <p class="lock-error" id="lockError" aria-live="polite">&nbsp;</p>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 2 — THE ENVELOPE ================= -->
+  <section class="page" id="page-2" data-skin="bloom">
+    <div class="page-inner envelope-panel">
+      <div class="env-stage stagger-in" id="envStage" role="button" tabindex="0" aria-label="Open the envelope">
+        <div class="env-glow" aria-hidden="true"></div>
+
+        <div class="env-persp">
+          <div class="env-body" id="envBody">
+            <div class="env-back" aria-hidden="true"></div>
+
+            <div class="env-letter" id="envLetter" aria-hidden="true">
+              <span class="env-letter-script">for my aditi</span>
+              <span class="env-letter-rule"></span>
+              <span class="env-letter-dots">&middot;&nbsp;&middot;&nbsp;&middot;</span>
+            </div>
+
+            <div class="env-front" aria-hidden="true"></div>
+
+            <div class="env-flap" id="envFlap" aria-hidden="true">
+              <span class="env-flap-face"></span>
+              <span class="env-flap-back"></span>
+            </div>
+
+            <button class="env-seal" id="envSeal" type="button" aria-label="Break the wax seal">
+              <span class="env-seal-shine" aria-hidden="true"></span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <span class="env-spark s1" aria-hidden="true"></span>
+        <span class="env-spark s2" aria-hidden="true"></span>
+        <span class="env-spark s3" aria-hidden="true"></span>
+        <span class="env-spark s4" aria-hidden="true"></span>
+      </div>
+
+      <p class="page-sub stagger-in" id="envHint">Tap the seal.</p>
+      <p class="envelope-postmark stagger-in">sent with love, delivered to you</p>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 3 — THE OPENING NOTE ================= -->
+  <section class="page" id="page-3" data-skin="kraft">
+    <div class="page-inner note-card">
+      <p class="note-line stagger-in placeholder-text" data-placeholder>
+        [ darlinnn, welcomeee this small gift just like your hands just for you ]
+      </p>
+      <button class="btn-primary stagger-in" id="toHubBtn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 4 — CHOOSE YOUR GIFT ================= -->
+  <section class="page" id="page-4" data-skin="bloom">
+    <div class="page-inner hub-panel">
+
+      <div class="hub-view" id="hubView">
+        <h2 class="page-heading script stagger-in">Choose a Gift</h2>
+        <p class="page-sub stagger-in">Open them in any order. See all three, or don’t — up to you, love.</p>
+
+        <div class="gift-row stagger-in">
+          <button class="gift-box" data-box="1" aria-label="Open gift one">
+            <svg class="gift-box-svg" viewBox="0 0 160 150" aria-hidden="true">
+              <rect class="box-body" x="20" y="70" width="120" height="65" rx="10" />
+              <rect class="box-lid" x="14" y="50" width="132" height="26" rx="10" />
+              <rect class="ribbon-v" x="72" y="50" width="16" height="85" />
+              <rect class="ribbon-h" x="14" y="58" width="132" height="14" />
+              <path class="bow" d="M80,50 C60,38 50,20 66,16 C78,13 82,28 80,38 C78,28 82,13 94,16 C110,20 100,38 80,50 Z" />
+            </svg>
+            <span class="gift-label">For Your Eyes</span>
+          </button>
+
+          <button class="gift-box" data-box="2" aria-label="Open gift two">
+            <svg class="gift-box-svg" viewBox="0 0 160 150" aria-hidden="true">
+              <rect class="box-body" x="20" y="70" width="120" height="65" rx="10" />
+              <rect class="box-lid" x="14" y="50" width="132" height="26" rx="10" />
+              <rect class="ribbon-v" x="72" y="50" width="16" height="85" />
+              <rect class="ribbon-h" x="14" y="58" width="132" height="14" />
+              <path class="bow" d="M80,50 C60,38 50,20 66,16 C78,13 82,28 80,38 C78,28 82,13 94,16 C110,20 100,38 80,50 Z" />
+            </svg>
+            <span class="gift-label">For Your Heart</span>
+          </button>
+
+          <button class="gift-box" data-box="3" aria-label="Open gift three">
+            <svg class="gift-box-svg" viewBox="0 0 160 150" aria-hidden="true">
+              <rect class="box-body" x="20" y="70" width="120" height="65" rx="10" />
+              <rect class="box-lid" x="14" y="50" width="132" height="26" rx="10" />
+              <rect class="ribbon-v" x="72" y="50" width="16" height="85" />
+              <rect class="ribbon-h" x="14" y="58" width="132" height="14" />
+              <path class="bow" d="M80,50 C60,38 50,20 66,16 C78,13 82,28 80,38 C78,28 82,13 94,16 C110,20 100,38 80,50 Z" />
+            </svg>
+            <span class="gift-label">For You</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Gift 1 detail: Custom Image -->
+      <div class="gift-detail" id="giftDetail1" hidden>
+        <span class="page-header-tag">MEMORIES • PAGE 01</span>
+        <p class="aesthetic-quote-top">“In a garden full of life, you are my favorite bloom.”</p>
+        
+        <div class="gift-custom-img-wrap clickable-img">
+          <img src="https://i.imgur.com/0bGZ6tW.jpeg" alt="Flower Image" class="gift-custom-img" referrerpolicy="no-referrer" />
+        </div>
+        <p class="gift-message">Every flower here is one more reason I fell for you.</p>
+        <div class="detail-actions">
+          <button class="btn-ghost back-btn">Back</button>
+          <button class="btn-primary continue-btn">Continue Our Story →</button>
+        </div>
+      </div>
+
+      <!-- Gift 2 detail: Star Jar -->
+      <div class="gift-detail" id="giftDetail2" hidden>
+        <span class="page-header-tag">WISHES • PAGE 02</span>
+        <p class="aesthetic-quote-top">“Stars can’t shine without a little magic from you.”</p>
+        <p class="tap-hint-text">✨ Tap the jar to open my wishes for you ✨</p>
+        
+        <div class="gift-scene jar-scene jar-interactive" id="jarTrigger" role="button" aria-label="Tap jar to reveal wishes">
+          <svg viewBox="0 0 160 210" aria-hidden="true">
+            <path class="jar-body" d="M40,75 Q34,155 55,185 Q80,200 105,185 Q126,155 120,75 Z" fill="rgba(255,255,255,0.22)" stroke="#f3b6c9" stroke-width="3" />
+            <rect class="jar-neck" x="55" y="48" width="50" height="30" rx="6" fill="rgba(255,255,255,0.22)" stroke="#f3b6c9" stroke-width="3" />
+            <ellipse class="jar-lid" cx="80" cy="48" rx="30" ry="10" fill="#d88a9a" />
+            <path class="star" d="M0,-8 L2.2,-2.2 L8,-2 L3.2,1.8 L4.8,8 L0,4.4 L-4.8,8 L-3.2,1.8 L-8,-2 L-2.2,-2.2 Z" transform="translate(62 155)" fill="#fbe9ef" />
+            <path class="star" d="M0,-8 L2.2,-2.2 L8,-2 L3.2,1.8 L4.8,8 L0,4.4 L-4.8,8 L-3.2,1.8 L-8,-2 L-2.2,-2.2 Z" transform="translate(94 135) scale(0.8)" fill="#f6da8e" />
+            <path class="star" d="M0,-8 L2.2,-2.2 L8,-2 L3.2,1.8 L4.8,8 L0,4.4 L-4.8,8 L-3.2,1.8 L-8,-2 L-2.2,-2.2 Z" transform="translate(75 110) scale(0.6)" fill="#f3b6c9" />
+            <path class="star" d="M0,-8 L2.2,-2.2 L8,-2 L3.2,1.8 L4.8,8 L0,4.4 L-4.8,8 L-3.2,1.8 L-8,-2 L-2.2,-2.2 Z" transform="translate(98 168) scale(0.7)" fill="#fbe9ef" />
+            <path class="star" d="M0,-8 L2.2,-2.2 L8,-2 L3.2,1.8 L4.8,8 L0,4.4 L-4.8,8 L-3.2,1.8 L-8,-2 L-2.2,-2.2 Z" transform="translate(58 125) scale(0.5)" fill="#eb9fb0" />
+          </svg>
+        </div>
+
+        <p class="gift-message">A jar of every wish I've made since I met you.</p>
+
+        <div class="detail-actions">
+          <button class="btn-ghost back-btn">Back</button>
+          <button class="btn-primary continue-btn">Continue Our Story →</button>
+        </div>
+
+        <!-- Wish Chits Modal Popup -->
+        <div class="chit-modal-overlay" id="chitModal" hidden>
+          <div class="chit-card-wrap">
+            <button class="chit-close-btn" id="closeChitBtn" aria-label="Close wishes">&times;</button>
+            <h3 class="chit-modal-title">Wishes Inside The Jar ✨</h3>
+            <div class="chit-list">
+              <div class="chit-item">
+                <span class="chit-tag">Wish 1</span>
+                <p class="chit-text">To make you smile every single day.</p>
+              </div>
+              <div class="chit-item">
+                <span class="chit-tag">Wish 2</span>
+                <p class="chit-text">To travel to places we’ve always talked about together.</p>
+              </div>
+              <div class="chit-item">
+                <span class="chit-tag">Wish 3</span>
+                <p class="chit-text">To always be your safe space and biggest supporter.</p>
+              </div>
+              <div class="chit-item">
+                <span class="chit-tag">Wish 4</span>
+                <p class="chit-text">To hold your hand through every chapter of our story.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gift 3 detail: Custom Love Collage Photo -->
+      <div class="gift-detail" id="giftDetail3" hidden>
+        <span class="page-header-tag">LOVE NOTES • PAGE 03</span>
+        <p class="aesthetic-quote-top">“Every little piece of us tells a story of forever.”</p>
+        <p class="tap-hint-text"> Tap karo picture pe to view full screen </p>
+        
+        <div class="gift-custom-img-wrap gift3-collage-wrap clickable-img">
+          <img src="https://i.imgur.com/0n63Lc7.png" alt="Love Collage" class="gift-custom-img" referrerpolicy="no-referrer" />
+        </div>
+        <p class="gift-message">Every piece of this carries a little secret of how deeply loved you truly are. ❤️</p>
+        <div class="detail-actions">
+          <button class="btn-ghost back-btn">Back</button>
+          <button class="btn-primary continue-btn">Continue Our Story →</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- (PAGE 5 — ORBIT OF MEMORIES removed: it was the laggiest page; its five photos
+       still live in the Page 23 collage, so no memories were lost) -->
+
+  <!-- ================= PAGE 6 — MEMORY POLAROID 1 ================= -->
+  <section class="page" id="page-6" data-skin="kraft">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">merii aditii ka birthdayyyy</h2>
+      <div class="polaroid stagger-in" id="polaroid1">
+        <span class="tape tape-left"></span>
+        <span class="tape tape-right"></span>
+        <div class="polaroid-photo">
+          <img src="https://i.imgur.com/cjurLUA.jpeg" alt="A favorite memory" class="polaroid-img" referrerpolicy="no-referrer" onerror="this.closest('.polaroid-photo').classList.add('img-missing')" />
+        </div>
+        <p class="polaroid-caption placeholder-text">[ minee ]</p>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage7Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 7 — MEMORY POLAROID 2 (flip) ================= -->
+  <section class="page" id="page-7" data-skin="kraft">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Another One I Love</h2>
+      <div class="flip-polaroid stagger-in" id="polaroid2">
+        <div class="flip-inner">
+          <div class="flip-front polaroid">
+            <span class="tape tape-left"></span>
+            <span class="tape tape-right"></span>
+            <div class="polaroid-photo">
+              <img src="https://i.imgur.com/RDT9py3.jpeg" alt="Another favorite memory" class="polaroid-img" referrerpolicy="no-referrer" onerror="this.closest('.polaroid-photo').classList.add('img-missing')" />
+            </div>
+            <span class="flip-hint">Tap to flip</span>
+          </div>
+          <div class="flip-back polaroid">
+            <p class="polaroid-caption placeholder-text">They say perfection doesn't exist but then somehow, there’s you.</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage8Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 8 — THE MUSIC BOX ================= -->
+  <section class="page" id="page-8" data-skin="kraft">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Our Song Box</h2>
+
+      <div class="music-card stagger-in">
+        <div class="music-art" aria-hidden="true">
+          <span class="music-art-ring"></span>
+          <span class="music-art-ring r2"></span>
+          <svg viewBox="0 0 24 24"><path d="M12 3v9.28a4.5 4.5 0 1 0 2 3.72V7.35l4.5-.9V3.9L12 3z"/></svg>
+        </div>
+
+        <div class="waveform" id="waveform">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <p class="now-playing-label">Now playing</p>
+        <p class="now-playing-title" id="nowPlayingTitle">—</p>
+
+        <div class="music-controls">
+          <button class="music-btn" id="prevTrackBtn" type="button" aria-label="Previous song">
+            <svg viewBox="0 0 24 24"><path d="M6 6h2.6v12H6zM19 6v12l-9.6-6z"/></svg>
+          </button>
+          <button class="music-btn play" id="playPauseBtn" type="button" aria-label="Play or pause">
+            <svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.4v14H7zm6.6 0H17v14h-3.4z"/></svg>
+          </button>
+          <button class="music-btn" id="nextTrackBtn" type="button" aria-label="Next song">
+            <svg viewBox="0 0 24 24"><path d="M18 6h-2.6v12H18zM5 6v12l9.6-6z"/></svg>
+          </button>
+        </div>
+
+        <div class="track-list" id="trackList"></div>
+        <p class="track-hint" id="trackHint">tap a song anytime to switch</p>
+      </div>
+
+      <p class="page-sub stagger-in placeholder-text">there are 3 songs and all of them are related to us Aditi</p>
+      <button class="btn-primary stagger-in" id="toPage9Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 9 — 100 REASONS FLOATING CLOUD ================= -->
+  <section class="page" id="page-9" data-skin="kraft">
+    <div class="page-inner love-cloud-panel">
+      <span class="page-header-tag stagger-in">100 REASONS WHY</span>
+      <h2 class="page-heading script stagger-in">100 Reasons why me I Love You</h2>
+      <p class="page-sub stagger-in">Drag & pan through our floating heart constellation. Tap any heart to unlock its secret message.</p>
+
+      <!-- Glass Viewport Canvas for 100 Floating Hearts -->
+      <div class="love-cloud-viewport stagger-in" id="loveCloudViewport">
+        <div class="love-cloud-canvas" id="loveCloudCanvas">
+          <!-- 100 Floating Glass Hearts generated dynamically via JS -->
+        </div>
+      </div>
+
+      <div class="cloud-counter-badge stagger-in" id="cloudCounterBadge">
+        <span id="unlockedCount">0</span> / 100 Unlocked
+      </div>
+
+      <button class="btn-primary stagger-in" id="toPage10Btn">Continue Our Story →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 10 — THE COUPON BOOK ================= -->
+  <section class="page" id="page-10" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Redeemable, Anytime</h2>
+      <p class="page-sub stagger-in">Tap a coupon to stamp it redeemed. They still count even after.</p>
+      <div class="coupon-stack stagger-in">
+        <button class="coupon" data-coupon="1">
+          <span class="coupon-title">1× Coffee Date</span>
+          <span class="coupon-sub">My treat, any café you pick</span>
+          <span class="coupon-stamp">REDEEMED</span>
+        </button>
+        <button class="coupon" data-coupon="2">
+          <span class="coupon-title">1× Movie Night</span>
+          <span class="coupon-sub">Your pick, no vetoes</span>
+          <span class="coupon-stamp">REDEEMED</span>
+        </button>
+        <button class="coupon" data-coupon="3">
+          <span class="coupon-title">Unlimited Hugs</span>
+          <span class="coupon-sub">Redeemable anytime, no expiry</span>
+          <span class="coupon-stamp">REDEEMED</span>
+        </button>
+        <button class="coupon" data-coupon="4">
+          <span class="coupon-title">1× Rant Session</span>
+          <span class="coupon-sub">I listen, zero interruptions</span>
+          <span class="coupon-stamp">REDEEMED</span>
+        </button>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage11Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 11 — BLOW OUT THE CANDLE ================= -->
+  <section class="page" id="page-11" data-skin="rose">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Make a Wish</h2>
+      <p class="page-sub stagger-in">Tap the flame.</p>
+      <button class="candle-btn stagger-in" id="candleBtn" aria-label="Blow out the candle">
+        <svg class="candle-svg" viewBox="0 0 100 180" aria-hidden="true">
+          <rect class="candle-body" x="35" y="70" width="30" height="100" rx="6" fill="#fbe9ef" />
+          <rect class="candle-stripe" x="35" y="100" width="30" height="10" fill="#f3b6c9" />
+          <rect class="candle-stripe" x="35" y="130" width="30" height="10" fill="#f3b6c9" />
+          <line class="candle-wick" x1="50" y1="70" x2="50" y2="58" stroke="#4a1029" stroke-width="2" />
+          <path class="candle-flame" d="M50,58 C42,48 44,36 50,26 C56,36 58,48 50,58 Z" fill="#f6da8e" />
+          <path class="candle-flame-inner" d="M50,54 C46,48 47,40 50,34 C53,40 54,48 50,54 Z" fill="#fff3d6" />
+        </svg>
+        <span class="candle-smoke" aria-hidden="true"></span>
+      </button>
+      <p class="page-sub placeholder-text stagger-in" id="candleWishText">You always love me forever
+      you and me together always forever</p>
+      <button class="btn-primary stagger-in" id="toPage12Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 12 — THIS OR THAT: US EDITION ================= -->
+  <section class="page" id="page-12" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">This or That</h2>
+      <p class="page-sub stagger-in">Us edition. Tap your favorite side.</p>
+      <div class="tt-row stagger-in">
+        <button class="tt-option" data-pair="1" data-side="a">Morning cuddles</button>
+        <span class="tt-or">or</span>
+        <button class="tt-option" data-pair="1" data-side="b">Late-night calls</button>
+      </div>
+      <div class="tt-row stagger-in">
+        <button class="tt-option" data-pair="2" data-side="a">Beach date</button>
+        <span class="tt-or">or</span>
+        <button class="tt-option" data-pair="2" data-side="b">Mountain hike</button>
+      </div>
+      <div class="tt-row stagger-in">
+        <button class="tt-option" data-pair="3" data-side="a">Text rants</button>
+        <span class="tt-or">or</span>
+        <button class="tt-option" data-pair="3" data-side="b">Voice notes</button>
+      </div>
+      <div class="tt-row stagger-in">
+        <button class="tt-option" data-pair="4" data-side="a">Home-cooked</button>
+        <span class="tt-or">or</span>
+        <button class="tt-option" data-pair="4" data-side="b">Ordering in</button>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage13Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 13 — GUESS THE MEMORY ================= -->
+  <section class="page" id="page-13" data-skin="kraft">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Guess the Memory</h2>
+      <p class="page-sub stagger-in" id="guessHint">Tap the photo to bring it into focus. <span id="guessTapsLeft">4 taps left</span></p>
+      <div class="guess-photo-wrap stagger-in" id="guessPhotoWrap">
+        <img src="https://i.imgur.com/acWWNhl.jpeg" alt="A memory coming into focus" class="guess-photo" id="guessPhoto" referrerpolicy="no-referrer" onerror="this.closest('.guess-photo-wrap').classList.add('img-missing')" />
+      </div>
+      <p class="page-sub guess-locked stagger-in" id="guessLocked">a secret message is hiding behind the blur &#128064;</p>
+      <p class="page-sub placeholder-text stagger-in" id="guessCaption" hidden>ofcccc the maggie night, the best nightt. its the reason we in love with eachother</p>
+      <button class="btn-primary stagger-in" id="toPage14Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 14 — THE SECRET NOTE BOX ================= -->
+  <section class="page" id="page-14" data-skin="rose">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">A Box Within a Box</h2>
+      <div class="secret-box-outer stagger-in" id="secretOuter">
+        <svg viewBox="0 0 160 150" aria-hidden="true">
+          <rect class="box-body" x="20" y="70" width="120" height="65" rx="10" fill="#8b3550" />
+          <rect class="box-lid" x="14" y="50" width="132" height="26" rx="10" fill="#a13d5e" />
+          <rect class="ribbon-v" x="72" y="50" width="16" height="85" fill="#f3b6c9" />
+          <rect class="ribbon-h" x="14" y="58" width="132" height="14" fill="#f3b6c9" />
+        </svg>
+        <p class="page-sub stagger-in">Tap to open the outer box.</p>
+      </div>
+      <div class="secret-box-inner" id="secretInner" hidden>
+        <button class="hold-lock" id="holdLock" aria-label="Press and hold to unlock">
+          <svg class="hold-ring" viewBox="0 0 80 80">
+            <circle class="hold-ring-track" cx="40" cy="40" r="34" />
+            <circle class="hold-ring-progress" id="holdRingProgress" cx="40" cy="40" r="34" />
+          </svg>
+          <span class="hold-label">Hold</span>
+        </button>
+        <p class="page-sub">Press and hold to unlock the inner box.</p>
+      </div>
+      <div class="secret-letter" id="secretLetter" hidden>
+        <p class="note-line placeholder-text">merii jaann, i love you so much aditi happpiiestt birthday merii jaann hehe my beautiful lady. ykk aditiii me will try my besttt to make your birthday Special not just birthday also your life, every day and everthing. birthday to already especial he because its your birthday aditiiiii besttt dayyy frr ahhh im so blessed that me with you here celebrating your birthday just so blessed. i love you so much aditi, happyyy birthday aditi mwahh</p>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage15Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 15 — REASONS YOU'RE MY FAVORITE PERSON ================= -->
+  <section class="page" id="page-15" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">My Favorite Person</h2>
+      <p class="page-sub stagger-in">Tap a card.</p>
+      <div class="reason-grid stagger-in">
+        <button class="reason-card" data-reason="1"><div class="reason-inner"><div class="reason-front">01</div><div class="reason-back"> she is an artist</div></div></button>
+        <button class="reason-card" data-reason="2"><div class="reason-inner"><div class="reason-front">02</div><div class="reason-back"> she love rasmalai wala cake </div></div></button>
+        <button class="reason-card" data-reason="3"><div class="reason-inner"><div class="reason-front">03</div><div class="reason-back">she always miss me</div></div></button>
+        <button class="reason-card" data-reason="4"><div class="reason-inner"><div class="reason-front">04</div><div class="reason-back"> she just a baby </div></div></button>
+        <button class="reason-card" data-reason="5"><div class="reason-inner"><div class="reason-front">05</div><div class="reason-back"> she is mine </div></div></button>
+        <button class="reason-card" data-reason="6"><div class="reason-inner"><div class="reason-front">06</div><div class="reason-back"> her name is Aditi sai chatre</div></div></button>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage16Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 16 — OUR SONG, OUR WORDS ================= -->
+  <!-- ================= PAGE 16 — A LETTER FROM OUR FUTURE ================= -->
+  <section class="page" id="page-16" data-skin="rose">
+    <div class="page-inner note-card">
+      <div class="star-drift" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <h2 class="page-heading script stagger-in">A Letter for you aditi</h2>
+      <p class="note-line stagger-in placeholder-text">Sometimes I sit and think about how one person can become such a huge part of your life, and then I think of you. Somehow, you became someone I can't imagine my life without. You not just my love you've become my comfort, my favorite person, and someone I genuinely want beside me in my future.
+      Some people come into your life, and suddenly ordinary days don't feel so ordinary anymore.
+      I know we're not perfect. We have had arguments, misunderstandings, and moments where we've hurt each other. I've made mistakes too, and I know there are things I need to improve. But through all of it, one thing hasn't changed I still care about you deeply and ofcc always, and I still want to understand you better.
+      I don't love you because I think you're perfect. I love you because you're YOU. Your little habits, your random talks, your smile, your personality, even the little things you think nobody notices I notice them.
+      Perfect is something people spend their whole lives searching for, but somehow, I found something better you.
+      I don't know exactly what our future will look like, but I know what I hope for. I hope we keep growing together, learning from our mistakes, better, and making memories we'll look back on someday with a smile we did and age bhi and ik we'll end up marrying eachother.
+      I just want you to know that you're helllaaa special to me. No matter how many times I try to put it into words, it will never fully explain how much you mean to me.
+      You are, and will always be, one of the most beautiful chapters of my life.</p>
+      <button class="btn-primary stagger-in" id="toPage17Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 17 — LONG-DISTANCE COUNTDOWN ================= -->
+  <section class="page" id="page-17" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Counting Down to You</h2>
+      <p class="page-sub stagger-in placeholder-text"> aara me itte dinno me millne apko</p>
+      <div class="flight-path stagger-in">
+        <svg viewBox="0 0 260 60" aria-hidden="true">
+          <path class="flight-dashes" d="M20,45 Q130,-10 240,45" fill="none" stroke="#d88a9a" stroke-width="2" stroke-dasharray="4 6" />
+          <circle cx="20" cy="45" r="5" fill="#d88a9a" />
+          <circle cx="240" cy="45" r="5" fill="#d88a9a" />
+        </svg>
+        <div class="flight-plane" id="flightPlane">
+          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5z"/></svg>
+        </div>
+      </div>
+      <div class="countdown-grid stagger-in">
+        <div class="cd-unit"><span class="cd-num" id="cdDays">00</span><span class="cd-label">days</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-label">hrs</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdMins">00</span><span class="cd-label">min</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cdSecs">00</span><span class="cd-label">sec</span></div>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage18Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 18 — THE MYSTERY BOX ================= -->
+  <section class="page" id="page-18" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">One Little Mystery</h2>
+
+      <div class="mystery-stage stagger-in">
+        <div class="mystery-halo" aria-hidden="true"></div>
+
+        <button class="mystery-box" id="mysteryBox" type="button" aria-label="Open the mystery box">
+          <svg viewBox="0 0 160 150" aria-hidden="true">
+            <rect class="box-body" x="20" y="70" width="120" height="65" rx="10" fill="#f6d3dc" />
+            <ellipse class="box-mouth" cx="80" cy="70" rx="58" ry="9" fill="#a3485f" />
+            <rect class="box-lid" x="14" y="50" width="132" height="26" rx="10" fill="#f6d3dc" />
+            <rect class="ribbon-v" x="72" y="50" width="16" height="85" fill="#d88a9a" />
+            <rect class="ribbon-h" x="14" y="58" width="132" height="14" fill="#d88a9a" />
+          </svg>
+          <span class="mystery-mark">?</span>
+          <span class="mystery-burst" aria-hidden="true"></span>
+        </button>
+
+        <div class="mystery-glass" id="mysteryGlass" hidden>
+          <span class="mystery-tag">the mystery</span>
+          <p class="mystery-riddle" id="mysteryRiddle">ek chhoti si mystery… kaunsi cheez hai jo roz badalti nahi, par har din thoda zyada ho jaati hai?</p>
+          <button class="btn-ghost mystery-reveal" id="mysteryRevealBtn" type="button">Reveal it</button>
+          <p class="mystery-answer placeholder-text" id="mysteryAnswer" hidden>mera pyaar tumse, aditi. roz thoda zyada, kabhi kam nahi.</p>
+        </div>
+      </div>
+
+      <p class="page-sub stagger-in" id="mysteryPrompt">Tap the box.</p>
+      <button class="btn-primary stagger-in" id="toPage19Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 19 — OUR FUTURE ADVENTURES WISHLIST ================= -->
+  <section class="page" id="page-19" data-skin="kraft">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Someday, Together</h2>
+      <p class="page-sub stagger-in">Tap each one we're claiming.</p>
+      <div class="wishlist stagger-in">
+        <button class="wish-item" data-wish="1"><span class="wish-check"></span>we playing games togetherrr</button>
+        <button class="wish-item" data-wish="2"><span class="wish-check"></span>Cook a full meal in the same kitchen</button>
+        <button class="wish-item" data-wish="3"><span class="wish-check"></span>then br</button>
+        <button class="wish-item" data-wish="4"><span class="wish-check"></span>A road trip on my cycle</button>
+        <button class="wish-item" data-wish="5"><span class="wish-check"></span>Fall asleep baat karte karte</button>
+        <button class="wish-item" data-wish="6"><span class="wish-check"></span>Adopt a dog and you eat pedicure</button>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage20Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 20 — MAP OF US ================= -->
+  <section class="page" id="page-20" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Map of Us</h2>
+      <p class="page-sub stagger-in">Tap a pin.</p>
+      <div class="map-wrap stagger-in">
+        <svg viewBox="0 0 300 220" class="map-svg" aria-hidden="true">
+          <path class="map-route" d="M40,180 Q90,60 150,110 T260,40" fill="none" stroke="#d88a9a" stroke-width="2" stroke-dasharray="5 7" />
+        </svg>
+        <button class="map-pin" data-pin="1" style="left:13%; top:82%;" aria-label="First pin">
+          <svg viewBox="0 0 24 24"><path d="M12 2C7.6 2 4 5.6 4 10c0 6 8 12 8 12s8-6 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z" /></svg>
+        </button>
+        <button class="map-pin" data-pin="2" style="left:50%; top:50%;" aria-label="Second pin">
+          <svg viewBox="0 0 24 24"><path d="M12 2C7.6 2 4 5.6 4 10c0 6 8 12 8 12s8-6 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z" /></svg>
+        </button>
+        <button class="map-pin" data-pin="3" style="left:87%; top:18%;" aria-label="Third pin">
+          <svg viewBox="0 0 24 24"><path d="M12 2C7.6 2 4 5.6 4 10c0 6 8 12 8 12s8-6 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z" /></svg>
+        </button>
+      </div>
+      <p class="map-caption placeholder-text" id="mapCaption">The path ahead may be long, but I want to take every step of it with you.</p>
+      <button class="btn-primary stagger-in" id="toPage21Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 21 — THE GRAND GIFT BOX ================= -->
+  <section class="page" id="page-21" data-skin="rose">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">The Big One</h2>
+      <p class="page-sub stagger-in">Save the best for last.</p>
+      <button class="grand-box stagger-in" id="grandBox" aria-label="Open the grand gift box">
+        <svg viewBox="0 0 220 200" aria-hidden="true">
+          <rect class="gb-body" x="30" y="95" width="160" height="90" rx="12" fill="#a13d5e" />
+          <rect class="gb-lid" x="20" y="65" width="180" height="34" rx="12" fill="#c14a72" />
+          <rect class="gb-ribbon-v" x="98" y="65" width="24" height="120" fill="#f3b6c9" />
+          <rect class="gb-ribbon-h" x="20" y="76" width="180" height="18" fill="#f3b6c9" />
+          <path class="gb-bow" d="M110,65 C80,48 66,22 88,16 C104,12 110,32 110,46 C110,32 116,12 132,16 C154,22 140,48 110,65 Z" fill="#f3b6c9" />
+        </svg>
+        <span class="gb-sparkle s1"></span>
+        <span class="gb-sparkle s2"></span>
+        <span class="gb-sparkle s3"></span>
+        <span class="gb-sparkle s4"></span>
+      </button>
+      <div class="grand-reveal" id="grandReveal" hidden>
+        <p class="note-line placeholder-text"> my loveee, eat rasmalai wala cake then eat me live your life as you want. its your day my loveeee its just youu and meee heh we togetherrrrr i love youu so muchhh. nglll aditi me out of the words idkkk kya likhu bro me wanna writeee bohot kuchh but kaise ienusdhueehehwuw meriiii jaannnnnnnn habibi happy birthday mwah</p>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage22Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 22 — IF I COULD GIVE YOU THE WORLD ================= -->
+  <section class="page" id="page-22" data-skin="rose">
+    <div class="page-inner">
+      <div class="star-drift" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <h2 class="page-heading script stagger-in">what me gonna give you</h2>
+      <div class="world-lines" id="worldLines">
+        <p class="world-line placeholder-text" data-line="1">heh yk my loyalty</p>
+        <p class="world-line placeholder-text" data-line="2" hidden>love which you deserve</p>
+        <p class="world-line placeholder-text" data-line="3" hidden>500 cakes</p>
+        <p class="world-line placeholder-text" data-line="4" hidden>huggssssssssss</p>
+      </div>
+      <button class="btn-ghost stagger-in" id="worldNextBtn">Tap for more</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 23 — PHOTO COLLAGE & SPARKLE WALL ================= -->
+  <section class="page" id="page-23" data-skin="bloom">
+    <div class="page-inner">
+      <div class="sparkle-wall" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <h2 class="page-heading script stagger-in">Every Little Piece of Us</h2>
+      <div class="collage-grid stagger-in">
+        <div class="collage-tile clickable-img t1"><img src="https://i.imgur.com/lDoDQiE.jpeg" alt="Memory" referrerpolicy="no-referrer" onerror="this.classList.add('img-missing'); this.parentElement.classList.add('img-missing');" /></div>
+        <div class="collage-tile clickable-img t2"><img src="https://i.imgur.com/ls8Dspi.jpeg" alt="Memory" referrerpolicy="no-referrer" onerror="this.classList.add('img-missing'); this.parentElement.classList.add('img-missing');" /></div>
+        <div class="collage-tile clickable-img t3"><img src="https://i.imgur.com/DrAytas.jpeg" alt="Memory" referrerpolicy="no-referrer" onerror="this.classList.add('img-missing'); this.parentElement.classList.add('img-missing');" /></div>
+        <div class="collage-tile clickable-img t4"><img src="https://i.imgur.com/vhCyijg.jpeg" alt="Memory" referrerpolicy="no-referrer" onerror="this.classList.add('img-missing'); this.parentElement.classList.add('img-missing');" /></div>
+        <div class="collage-tile clickable-img t5"><img src="https://i.imgur.com/JdVOgfj.jpeg" alt="Memory" referrerpolicy="no-referrer" onerror="this.classList.add('img-missing'); this.parentElement.classList.add('img-missing');" /></div>
+        <div class="collage-tile clickable-img t6"><img src="https://i.imgur.com/pQjHDnx.jpeg" alt="Memory" referrerpolicy="no-referrer" onerror="this.classList.add('img-missing'); this.parentElement.classList.add('img-missing');" /></div>
+      </div>
+      <p class="page-sub stagger-in">Tap any photo to see it bigger.</p>
+      <button class="btn-primary stagger-in" id="toPage24Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 24 — JUST BECAUSE ================= -->
+  <section class="page" id="page-24" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Just Because</h2>
+      <p class="page-sub stagger-in">No reason. Tap for another.</p>
+      <div class="jb-card stagger-in">
+        <p class="jb-text" id="jbText">Tap below.</p>
+      </div>
+      <button class="btn-primary stagger-in" id="jbShuffleBtn">Tell me something →</button>
+      <button class="btn-ghost stagger-in" id="toPage25Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 25 — LET'S CELEBRATE ================= -->
+  <section class="page" id="page-25" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">Let's Celebrate You</h2>
+      <p class="page-sub stagger-in">Tap it. Tap it again if you want.</p>
+
+      <div class="celebrate-stage stagger-in">
+        <div class="celebrate-balloons" aria-hidden="true">
+          <span class="cballoon b1"></span>
+          <span class="cballoon b2"></span>
+          <span class="cballoon b3"></span>
+          <span class="cballoon b4"></span>
+          <span class="cballoon b5"></span>
+        </div>
+
+        <div class="confetti-layer" id="celebrationBurstLayer" aria-hidden="true"></div>
+
+        <button class="celebrate-cake" id="celebrateBtn" type="button" aria-label="Light the candles">
+          <span class="cake-halo" aria-hidden="true"></span>
+          <svg class="cake-svg" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <linearGradient id="cakeTop" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fff4f7" /><stop offset="100%" stop-color="#f3c3cf" />
+              </linearGradient>
+              <linearGradient id="cakeMid" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fce4ea" /><stop offset="100%" stop-color="#e79fb2" />
+              </linearGradient>
+            </defs>
+
+            <ellipse cx="100" cy="174" rx="84" ry="11" fill="rgba(140,70,95,0.16)" />
+
+            <rect x="32" y="120" width="136" height="52" rx="14" fill="url(#cakeTop)" stroke="#e7b6c3" stroke-width="1.5" />
+            <path d="M32 126 q9 13 17 0 q9 13 17 0 q9 13 17 0 q9 13 17 0 q9 13 17 0 q9 13 17 0 q9 13 17 0 q8 13 17 0" fill="none" stroke="#fff8fa" stroke-width="5" stroke-linecap="round" />
+
+            <rect x="50" y="90" width="100" height="34" rx="12" fill="url(#cakeMid)" stroke="#e7b6c3" stroke-width="1.5" />
+            <path d="M50 95 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 20 0" fill="none" stroke="#fff8fa" stroke-width="4.5" stroke-linecap="round" />
+
+            <rect x="66" y="66" width="68" height="28" rx="11" fill="url(#cakeTop)" stroke="#e7b6c3" stroke-width="1.5" />
+
+            <g class="cake-candle c1" transform="translate(76 68)">
+              <rect x="-3.5" y="-20" width="7" height="20" rx="3" fill="#f6d3dc" />
+              <rect x="-3.5" y="-14" width="7" height="4" fill="#d88a9a" />
+              <ellipse class="candle-fire" cx="0" cy="-26" rx="5.2" ry="9" fill="#ffd989" />
+              <ellipse class="candle-fire" cx="0" cy="-25" rx="2.4" ry="5" fill="#fff8dd" />
+            </g>
+            <g class="cake-candle c2" transform="translate(90 68)">
+              <rect x="-3.5" y="-24" width="7" height="24" rx="3" fill="#e8dcf4" />
+              <rect x="-3.5" y="-17" width="7" height="4" fill="#b48fc9" />
+              <ellipse class="candle-fire" cx="0" cy="-30" rx="5.2" ry="9.4" fill="#ffd989" />
+              <ellipse class="candle-fire" cx="0" cy="-29" rx="2.4" ry="5.2" fill="#fff8dd" />
+            </g>
+            <g class="cake-candle c3" transform="translate(103 68)">
+              <rect x="-3.5" y="-22" width="7" height="22" rx="3" fill="#fbe3d4" />
+              <rect x="-3.5" y="-16" width="7" height="4" fill="#e0975f" />
+              <ellipse class="candle-fire" cx="0" cy="-28" rx="5.2" ry="9.2" fill="#ffd989" />
+              <ellipse class="candle-fire" cx="0" cy="-27" rx="2.4" ry="5" fill="#fff8dd" />
+            </g>
+            <g class="cake-candle c4" transform="translate(116 68)">
+              <rect x="-3.5" y="-19" width="7" height="19" rx="3" fill="#f6d3dc" />
+              <rect x="-3.5" y="-13" width="7" height="4" fill="#d88a9a" />
+              <ellipse class="candle-fire" cx="0" cy="-25" rx="5.2" ry="9" fill="#ffd989" />
+              <ellipse class="candle-fire" cx="0" cy="-24" rx="2.4" ry="5" fill="#fff8dd" />
+            </g>
+            <g class="cake-candle c5" transform="translate(129 68)">
+              <rect x="-3.5" y="-23" width="7" height="23" rx="3" fill="#e8dcf4" />
+              <rect x="-3.5" y="-16" width="7" height="4" fill="#b48fc9" />
+              <ellipse class="candle-fire" cx="0" cy="-29" rx="5.2" ry="9.4" fill="#ffd989" />
+              <ellipse class="candle-fire" cx="0" cy="-28" rx="2.4" ry="5.2" fill="#fff8dd" />
+            </g>
+          </svg>
+        </button>
+      </div>
+
+      <p class="celebrate-line" id="celebrateLine">light the candles 🎂</p>
+      <button class="btn-primary stagger-in" id="toPage26Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 26 — THE LOVE NOTES JAR ================= -->
+  <section class="page" id="page-26" data-skin="bloom">
+    <div class="page-inner">
+      <h2 class="page-heading script stagger-in">The Love Notes Jar</h2>
+      <p class="page-sub stagger-in">Tap the jar. Pull as many as you want.</p>
+      <button class="notes-jar stagger-in" id="notesJar" aria-label="Pull a note from the jar">
+        <svg viewBox="0 0 160 200" aria-hidden="true">
+          <path class="jar-body" d="M40,75 Q34,155 55,185 Q80,200 105,185 Q126,155 120,75 Z" fill="rgba(216,138,154,0.16)" stroke="#d88a9a" stroke-width="3" />
+          <rect class="jar-neck" x="55" y="48" width="50" height="30" rx="6" fill="rgba(216,138,154,0.16)" stroke="#d88a9a" stroke-width="3" />
+          <ellipse class="jar-lid" cx="80" cy="48" rx="30" ry="10" fill="#d88a9a" />
+        </svg>
+      </button>
+      <div class="pulled-note" id="pulledNote" hidden>
+        <p class="pulled-note-text" id="pulledNoteText"></p>
+      </div>
+      <button class="btn-primary stagger-in" id="toPage27Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 27 — HAPPY BIRTHDAY FINALE ================= -->
+  <section class="page" id="page-27" data-skin="rose">
+    <div class="page-inner finale-panel">
+      <div class="finale-aurora" aria-hidden="true"></div>
+      <div class="finale-rings" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="finale-stars" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="finale-burst" id="finaleBurst" aria-hidden="true"></div>
+
+      <span class="finale-tag">a little world, all for you</span>
+
+      <h2 class="finale-heading" id="finaleHeading">
+        <span>H</span><span>a</span><span>p</span><span>p</span><span>y</span><span>&nbsp;</span><span>B</span><span>i</span><span>r</span><span>t</span><span>h</span><span>d</span><span>a</span><span>y</span>
+      </h2>
+
+      <p class="finale-name">aditi</p>
+      <span class="finale-flourish" aria-hidden="true"></span>
+
+      <p class="page-sub stagger-in">This one's all yours.</p>
+      <button class="btn-primary stagger-in" id="toPage28Btn">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 28 — FOREVER & ALWAYS ================= -->
+  <section class="page" id="page-28" data-skin="bloom">
+    <div class="page-inner note-card">
+      <h2 class="page-heading script stagger-in">Forever & Always</h2>
+      <p class="note-line stagger-in placeholder-text">merii pyaarii sii jaan, one last thing listen to me. im here with you always forever and ab se i'll always with you on your birthday you not alone smjha merii jaan? we will celebrate your birthday bohot ache se sab mujhe pe chhor dena heh merii aditiii happyy birthday again i love you im so glad my love. and ik you'll cry isko dekh ke ik my babyy khushi ke aasu mwah mwah mwah</p>
+      <button class="btn-primary stagger-in" id="replayBtn">Replay Our Story ↺</button>
+    </div>
+  </section>
+
+  <!-- 100 REASONS LOVE MODAL POPUP -->
+  <div class="chit-modal-overlay" id="loveReasonModal" hidden>
+    <div class="chit-card-wrap love-reason-card">
+      <button class="chit-close-btn" id="closeLoveReasonBtn">&times;</button>
+      <span class="chit-tag" id="loveReasonNumber">Reason #1</span>
+      <h3 class="chit-modal-title" id="loveReasonTitle">Because...</h3>
+      <p class="chit-text" id="loveReasonText">Your love makes every single moment brighter.</p>
+    </div>
+  </div>
+
+  <!-- Fullscreen Photo Viewer / Lightbox Modal -->
+  <div class="lightbox-overlay" id="imageLightbox" hidden>
+    <button class="lightbox-close-btn" id="closeLightboxBtn" aria-label="Close picture">&times;</button>
+    <div class="lightbox-content">
+      <img src="" alt="Enlarged View" id="lightboxImg" referrerpolicy="no-referrer" />
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="script.js"></script>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
