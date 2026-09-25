@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const UNLOCK_CODE = '260926';
+  const UNLOCK_CODE = '260911';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const pages = Array.from(document.querySelectorAll('.page'));
